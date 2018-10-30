@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class EyesMovement : MonoBehaviour {
 
@@ -12,13 +13,11 @@ public class EyesMovement : MonoBehaviour {
     [SerializeField]
     private CinemachineVirtualCamera eyes_vCam;
     [SerializeField]
-    private CinemachineVirtualCamera player_vCam;
+    private CinemachineVirtualCamera eyes_vCam_NoSoftZone;
 
     [SerializeField]
     private Transform startAreaMargin;
-    [SerializeField]
-    private Transform startAreaTrigger;
-    [SerializeField]
+    [SerializeField]    
     private Transform growPoint;      
 
     [SerializeField]
@@ -37,13 +36,28 @@ public class EyesMovement : MonoBehaviour {
     private float originalGrowPointY;
     private float originalY;
 
-    void Start()
+    private void Awake()
     {
         oscilationY = transform.position.y;
         originalGrowPointY = growPoint.position.y;
         originalY = transform.position.y;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void OnEnable()
+    {        
+        eyes_vCam.Priority = 3;        
+        HUD.SetActive(false);
+        spriteRenderer.enabled = true;
+    }
+
+    private void OnDisable()
+    {      
+        if (HUD != null)
+        {
+            HUD.SetActive(true);
+        }       
     }
 
     void Update()
@@ -97,21 +111,50 @@ public class EyesMovement : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Respawn")
+        if (other.tag == "StartChange" || other.tag == "EndChange")
         {
             spriteRenderer.enabled = false;
-            player.SetActive(true);
+        }
+
+        if (other.tag == "Finish")
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+
+        if (other.tag == "Respawn")
+        {
+            eyes_vCam_NoSoftZone.Priority = Mathf.Abs(eyes_vCam_NoSoftZone.Priority - 4);
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag == "Respawn")
-        {
-            other.GetComponent<BoxCollider2D>().isTrigger = false;
+        if (other.tag == "StartChange")
+        {            
+            Vector2 newPos = transform.position;
+            newPos.x = other.transform.position.x - 0.5f;
+            transform.position = newPos;
+                
+            player.transform.position = new Vector2(newPos.x + 2f, player.transform.position.y);
+
+            player.SetActive(true);
             eyes_vCam.Priority = 1;
-            HUD.SetActive(true);            
+
             gameObject.SetActive(false);
         }
+        else if (other.tag == "EndChange")
+        {
+            Vector2 newPos = transform.position;
+            newPos.x = other.transform.position.x + 0.5f;
+            transform.position = newPos;
+
+            player.transform.position = new Vector2(newPos.x - 2f, player.transform.position.y);
+
+            player.SetActive(true);
+            eyes_vCam.Priority = 1;
+
+            gameObject.SetActive(false);
+        }
+
     }
 }

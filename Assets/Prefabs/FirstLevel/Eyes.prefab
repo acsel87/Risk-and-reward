@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1860352023859384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30, y: 0.2, z: 0}
+  m_LocalPosition: {x: -31, y: 0.2, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4366204035716324}
@@ -115,7 +115,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1}
+  m_Size: {x: 0.1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &114701589161455028
 MonoBehaviour:
@@ -129,12 +129,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HUD: {fileID: 0}
-  crosshair: {fileID: 0}
   player: {fileID: 0}
   eyes_vCam: {fileID: 0}
-  player_vCam: {fileID: 0}
   startAreaMargin: {fileID: 0}
-  startAreaTrigger: {fileID: 0}
   growPoint: {fileID: 4366204035716324}
   moveSpeed: 10
   oscilationSpeed: 10

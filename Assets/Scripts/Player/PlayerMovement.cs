@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class PlayerMovement : MonoBehaviour {
-
+    
+    [SerializeField]
+    private GameObject eyes;
     [SerializeField]
     private float speed = 1f;
     [SerializeField]
@@ -110,12 +112,33 @@ public class PlayerMovement : MonoBehaviour {
             grounded = true;            
         }
 
-        if (other.tag == "Finish")
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-
         fallMultiplier = initialFallMultiplier;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "StartChange" && transform.position.x < other.transform.position.x)
+        {
+            Vector2 newPos = transform.position;
+            newPos.x = other.transform.position.x - 0.5f;
+            eyes.transform.position = newPos;
+
+            transform.position = newPos + (Vector2)transform.right * 2f;
+
+            eyes.SetActive(true);
+            gameObject.SetActive(false);
+        }
+        else if (other.tag == "EndChange" && transform.position.x > other.transform.position.x)
+        {
+            Vector2 newPos = transform.position;
+            newPos.x = other.transform.position.x + 0.5f;
+            eyes.transform.position = newPos;
+
+            transform.position = newPos - (Vector2)transform.right * 2f;
+
+            eyes.SetActive(true);
+            gameObject.SetActive(false);
+        }
     }
 
     private void StartAnimation()

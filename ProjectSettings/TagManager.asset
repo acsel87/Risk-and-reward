@@ -10,7 +10,8 @@ TagManager:
   - Goomba
   - Boss
   - Sword
-  - Change
+  - StartChange
+  - EndChange
   layers:
   - Default
   - TransparentFX

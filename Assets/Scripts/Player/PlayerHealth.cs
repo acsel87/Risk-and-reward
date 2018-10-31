@@ -21,19 +21,20 @@ public class PlayerHealth : MonoBehaviour {
 
     private bool lostLife = false;
 
-    private Animator anim;
+    private Animation animat;
     private Color32 originalHealthColor;
     private int originalHealth;
     private float timeToHeal;
 
     private void Start()
-    {
-        anim = GetComponent<Animator>();
+    {        
         if (healthVignette != null)
         {
             originalHealthColor = healthVignette.color;
             originalHealth = health;
-        }        
+        }
+
+        animat = GetComponent<Animation>();
     }
 
     private void Update()
@@ -107,8 +108,9 @@ public class PlayerHealth : MonoBehaviour {
     {
         lostLife = true;
         gameObject.layer = 2;
-        anim.SetTrigger("lostLife");
+        animat.Play();
         yield return new WaitForSeconds(3f);
+        animat.Stop();
         gameObject.layer = 8;
         lostLife = false;
     }

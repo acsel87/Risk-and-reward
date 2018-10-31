@@ -56,12 +56,12 @@ public class BossScript : MonoBehaviour {
     {
         if (player != null)
         {
-            if (player.position.x > meleeAreaTrigger.position.x && player.position.x < longRangeAreaTrigger.position.x)
+            if (player.position.x < meleeAreaTrigger.position.x && player.position.x > longRangeAreaTrigger.position.x)
             {
                 attackMelee = false;
                 attackLongRange = true;
             }
-            else if (player.position.x < meleeAreaTrigger.position.x)
+            else if (player.position.x > meleeAreaTrigger.position.x)
             {
                 attackLongRange = false;
                 attackMelee = true;

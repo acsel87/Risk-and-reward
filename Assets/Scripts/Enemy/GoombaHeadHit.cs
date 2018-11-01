@@ -31,14 +31,14 @@ public class GoombaHeadHit : MonoBehaviour {
             }
             else
             {
-                if (other.transform.position.x < transform.position.x)
-                {
-                    other.transform.position -= transform.right;
-                }
-                else
-                {
-                    other.transform.position += transform.right;
-                }
+                //if (other.transform.position.x < transform.position.x)
+                //{
+                //    other.transform.position -= transform.right;
+                //}
+                //else
+                //{
+                //    other.transform.position += transform.right;
+                //}
 
                 other.GetComponent<PlayerHealth>().LoseLife();
             }           

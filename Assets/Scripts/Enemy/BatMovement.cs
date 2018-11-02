@@ -12,15 +12,17 @@ public class BatMovement : MonoBehaviour {
     private float originalY;
 
     private SpriteRenderer sr;
+    private float timeCounter;
     
 	void Start () {
         sr = GetComponent<SpriteRenderer>();
 
         originalY = transform.position.y;
+
+        Destroy(gameObject, 30f);
 	}
 	
 	void Update () {
-
         Fly();
         Oscilate();
 	}
@@ -39,7 +41,8 @@ public class BatMovement : MonoBehaviour {
 
     private void Oscilate()
     {
-        transform.position = new Vector2(transform.position.x, originalY + Mathf.Sin(Time.time * oscilationSpeed));
+        timeCounter += Time.deltaTime;
+        transform.position = new Vector2(transform.position.x, originalY + Mathf.Sin(timeCounter * oscilationSpeed));
     }
 
     private void OnTriggerEnter2D(Collider2D other)

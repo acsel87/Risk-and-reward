@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1860352023859384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31, y: 0.2, z: 0}
+  m_LocalPosition: {x: -34, y: 0.2, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1}
   m_Children:
   - {fileID: 4366204035716324}
@@ -131,9 +131,10 @@ MonoBehaviour:
   HUD: {fileID: 0}
   player: {fileID: 0}
   eyes_vCam: {fileID: 0}
+  eyes_vCam_NoSoftZone: {fileID: 0}
   startAreaMargin: {fileID: 0}
   growPoint: {fileID: 4366204035716324}
-  moveSpeed: 10
+  moveSpeed: 8
   oscilationSpeed: 10
   oscilationLength: 0.1
   isSecondLevel: 0

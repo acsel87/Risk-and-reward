@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b88acd15e0fd344a0c097c05efc028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 500
+  speed: 700
   projectile: 0
   isTargetPlayer: 0
   isFirstLevel: 1

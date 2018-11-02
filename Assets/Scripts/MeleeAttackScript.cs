@@ -20,6 +20,8 @@ public class MeleeAttackScript : MonoBehaviour {
     [SerializeField]
     private bool isPlayer;
 
+    private bool canAttack = true;
+
     private void Start()
     {
         anim = GetComponent<Animator>();       
@@ -45,22 +47,29 @@ public class MeleeAttackScript : MonoBehaviour {
 
     public IEnumerator Attack()
     {
-        if (anim != null)
+        if (anim != null && canAttack)
         {
+            canAttack = false;
             WeaponHitArea.enabled = true;
             anim.SetTrigger("attack");
             yield return new WaitForSeconds(0.3f);
             WeaponHitArea.enabled = false;
+            canAttack = true;
         }        
     }
 
     private IEnumerator Whip()
     {
-        whip.SetActive(true);
-        yield return new WaitForSeconds(0.2f);
-        WeaponHitArea.enabled = true;        
-        yield return new WaitForSeconds(0.2f);
-        WeaponHitArea.enabled = false;
-        whip.SetActive(false);
+        if (canAttack)
+        {
+            canAttack = false;
+            whip.SetActive(true);
+            yield return new WaitForSeconds(0.2f);
+            WeaponHitArea.enabled = true;
+            yield return new WaitForSeconds(0.2f);
+            WeaponHitArea.enabled = false;
+            whip.SetActive(false);
+            canAttack = true;
+        }        
     }
 }

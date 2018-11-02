@@ -41,7 +41,9 @@ public class ProjectileBehaviour : MonoBehaviour {
             {
                 Shoot(AimScript.mousePoint);
             }
-        }        
+        }
+
+        Destroy(gameObject, 30f);
     }    
 
     private void Shoot(Vector2 target)
@@ -101,21 +103,24 @@ public class ProjectileBehaviour : MonoBehaviour {
 
     private void RocketShoot(Vector2 hitPoint)
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(hitPoint, explosionRadius);
+        if (explosionRadius > 0)
+        {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(hitPoint, explosionRadius);
 
-        foreach (Collider2D col in colliders)
-        {            
-            if (col.tag == "Enemy")
+            foreach (Collider2D col in colliders)
             {
-                col.GetComponent<EnemyHealth>().TakeDamage(damage);
-                break;
+                if (col.tag == "Enemy")
+                {
+                    col.GetComponent<EnemyHealth>().TakeDamage(damage);
+                    break;
+                }
+                else if (col.tag == "Player")
+                {
+                    col.GetComponent<PlayerHealth>().TakeDamage(damage);
+                    break;
+                }
             }
-            else if (col.tag == "Player")
-            {
-                col.GetComponent<PlayerHealth>().TakeDamage(damage);
-                break;
-            }
-        }        
+        }              
     }    
 
     private void OnHit()

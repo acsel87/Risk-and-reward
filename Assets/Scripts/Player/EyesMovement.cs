@@ -35,6 +35,7 @@ public class EyesMovement : MonoBehaviour {
     private float oscilationY;
     private float originalGrowPointY;
     private float originalY;
+    private float growAreaLimitX = 300f;
 
     private void Awake()
     {
@@ -72,10 +73,10 @@ public class EyesMovement : MonoBehaviour {
         {
             transform.position += transform.right * moveSpeed * Time.deltaTime;           
 
-            if (isSecondLevel && oscilationY < originalGrowPointY)
+            if (isSecondLevel && oscilationY < originalGrowPointY && transform.position.x < growAreaLimitX)
             {
                 oscilationY += 0.5f * Time.deltaTime;
-                transform.localScale -= Vector3.one * 0.1f * Time.deltaTime;
+                transform.localScale -= Vector3.one * 0.05f * Time.deltaTime;
             }
 
             if (spriteRenderer.flipX)
@@ -88,10 +89,10 @@ public class EyesMovement : MonoBehaviour {
             transform.position += -transform.right * moveSpeed * Time.deltaTime;
            
 
-            if (isSecondLevel && oscilationY > originalY)
+            if (isSecondLevel && oscilationY > originalY && transform.position.x < growAreaLimitX)
             {
                 oscilationY -= 0.5f * Time.deltaTime;
-                transform.localScale += Vector3.one * 0.1f * Time.deltaTime;
+                transform.localScale += Vector3.one * 0.05f * Time.deltaTime;
             }
 
             if (!spriteRenderer.flipX)
@@ -113,7 +114,7 @@ public class EyesMovement : MonoBehaviour {
     {
         if (other.tag == "StartChange" || other.tag == "EndChange")
         {
-            spriteRenderer.enabled = false;
+            spriteRenderer.enabled = false;            
         }
 
         if (other.tag == "Finish")
@@ -130,7 +131,9 @@ public class EyesMovement : MonoBehaviour {
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "StartChange")
-        {            
+        {
+            growAreaLimitX = other.transform.position.x;
+
             Vector2 newPos = transform.position;
             newPos.x = other.transform.position.x - 0.5f;
             transform.position = newPos;
